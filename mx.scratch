@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-<ProjectName>C:\Users\sakovitch\Desktop\STM\capteur_distance\\capteur_distance</ProjectName>
+<ProjectName>C:\Users\machon\Desktop\capteur_distance-master\\capteur_distance</ProjectName>
 <CMSIS>..\Drivers\CMSIS</CMSIS>
-<HAL_Driver>C:\Users\sakovitch\STM32Cube\Repository\STM32Cube_FW_L0_V1.10.0\Drivers\CMSIS</HAL_Driver>
+<HAL_Driver>C:\Users\machon\STM32Cube\Repository\STM32Cube_FW_L0_V1.10.0\Drivers\CMSIS</HAL_Driver>
 
 <Toolchain>SW4STM32</Toolchain>
 <Version>0</Version>
