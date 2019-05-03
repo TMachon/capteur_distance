@@ -1,7 +1,8 @@
+
 /**
   ******************************************************************************
-  * File Name          : main.c
-  * Description        : Main program body
+  * @file           : main.c
+  * @brief          : Main program body
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -35,10 +36,11 @@
   *
   ******************************************************************************
   */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "gpio.h"
+#include "led.h"
+#include "button.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -62,11 +64,22 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 
+LED_TypeDef led0;
+LED_TypeDef led1;
+LED_TypeDef led2;
+LED_TypeDef led3;
+
+BUTTON_TypeDef bouton;
+
 /* USER CODE END 0 */
 
+/**
+  * @brief  The application entry point.
+  *
+  * @retval None
+  */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -89,8 +102,19 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-
   /* USER CODE BEGIN 2 */
+
+	//configuration des leds
+	Led_init(&led0, GPIOA, 5);
+	Led_init(&led1, GPIOB, 6);
+	Led_init(&led2, GPIOC, 7);
+	Led_init(&led3, GPIOA, 9);
+
+	//configuration du bouton sur la pin PA13
+	Button_init(&bouton, GPIOB, 3, LL_GPIO_PULL_NO);
+	uint8_t last_button_state=1; //bouton non appuyé
+	uint8_t current_button_state=1; //bouton non appuyé
+
 
   /* USER CODE END 2 */
 
@@ -102,8 +126,13 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-  }
+	Led_turnOn(&led0);
+	Led_turnOn(&led1);
+	Led_turnOn(&led2);
+	Led_turnOn(&led3);
+
   /* USER CODE END 3 */
+  }
 
 }
 
@@ -124,8 +153,10 @@ static void LL_Init(void)
 
 }
 
-/** System Clock Configuration
-*/
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
 void SystemClock_Config(void)
 {
 
@@ -175,45 +206,43 @@ void SystemClock_Config(void)
 
 /**
   * @brief  This function is executed in case of error occurrence.
-  * @param  None
+  * @param  file: The file name as string.
+  * @param  line: The line in file as a number.
   * @retval None
   */
-void _Error_Handler(char * file, int line)
+void _Error_Handler(char *file, int line)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
   }
-  /* USER CODE END Error_Handler_Debug */ 
+  /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
-
+#ifdef  USE_FULL_ASSERT
 /**
-   * @brief Reports the name of the source file and the source line number
-   * where the assert_param error has occurred.
-   * @param file: pointer to the source file name
-   * @param line: assert_param error line source number
-   * @retval None
-   */
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
 void assert_failed(uint8_t* file, uint32_t line)
-{
+{ 
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
-
 }
-
-#endif
-
-/**
-  * @}
-  */ 
+#endif /* USE_FULL_ASSERT */
 
 /**
   * @}
-*/ 
+  */
+
+/**
+  * @}
+  */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
