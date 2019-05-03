@@ -1,0 +1,43 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP AFFICHEUR_LCD_16x2
+D LCD 16x2 Alphanumeric 16pin Gray Backlight
+K display LCD dot-matrix
+F http://www.raystar-optronics.com/down.php?ProID=18
+$ENDCMP
+#
+$CMP C_POLARISÉ
+D Polarized capacitor
+K cap capacitor
+F ~
+$ENDCMP
+#
+$CMP POUSSOIR_NF
+D Push button switch, push-to-open, generic, two pins
+K switch normally-closed pushbutton push-button
+$ENDCMP
+#
+$CMP POUSSOIR_NO
+D Push button switch, generic, two pins
+K switch normally-open pushbutton push-button
+$ENDCMP
+#
+$CMP R
+D Resistor
+K R res resistor
+F ~
+$ENDCMP
+#
+$CMP R_POT
+D Potentiometer
+K resistor variable
+F ~
+$ENDCMP
+#
+$CMP R_RESEAU_8
+D 8 resistor network, parallel topology, DIP package
+K R network parallel topology isolated
+F ~
+$ENDCMP
+#
+#End Doc Library

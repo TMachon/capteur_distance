@@ -1,0 +1,26 @@
+19 mars 2019
+Rev 6 avril 2019
+FD
+
+Télécharger Kicad :
+http://kicad-pcb.org/
+
+
+Installez la bibliothèque de composants lib_esiea, dans laquelle vous trouverez tout ce dont vous avez besoin :
+- Lancer Kicad
+- Cliquer sur l'icone Symbol library editor
+- Menu Préférences/Manage symbol editor
+    Cliquer sur "Browse Libraries" pour aller chercher lib_esiea.lib
+    Valider
+
+
+Editez et complétez le projet schema_stm32 (ouvrir schema_stm32.pro)
+
+Utilisez au maximum les "global labels" (les flèches avec un nom dedans) disponibles à droite du dessin parmi les icones pour éviter de tirer des fils. Tout ce qui porte le même nom est relié.
+
+Pour enregistrer le dessin en PDF, utilsez l'icone "Plot schematic"
+
+Vous avez un exemple minimaliste avec le projet PWM
+
+
+
