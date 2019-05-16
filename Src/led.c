@@ -7,7 +7,6 @@
 
 #include "led.h"
 
-
 void Led_init (LED_TypeDef * led, GPIO_TypeDef * port, uint16_t pn){
 	led -> gpioPort=port;
 	led -> pin=pn;

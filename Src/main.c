@@ -41,80 +41,66 @@
 #include "gpio.h"
 #include "led.h"
 #include "button.h"
-
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
+#include "capson.h"
 
 /* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE END PV */
+LED_TypeDef led0;
+LED_TypeDef led1;
+LED_TypeDef led2;
+LED_TypeDef led3;
+LED_TypeDef led4;
+LED_TypeDef led5;
+LED_TypeDef led6;
+LED_TypeDef led7;
+LED_TypeDef led8;
+LED_TypeDef led9;
+LED_TypeDef warning;
+CAPSON_TypeDef capteurTrigger;
+CAPSON_TypeDef capteurEcho;
+int cm;
 
 /* Private function prototypes -----------------------------------------------*/
 static void LL_Init(void);
 void SystemClock_Config(void);
 
-/* USER CODE BEGIN PFP */
-/* Private function prototypes -----------------------------------------------*/
-
-/* USER CODE END PFP */
-
-/* USER CODE BEGIN 0 */
-
-LED_TypeDef led0;
-LED_TypeDef led1;
-LED_TypeDef led2;
-LED_TypeDef led3;
-
-BUTTON_TypeDef bouton;
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  *
-  * @retval None
-  */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration----------------------------------------------------------*/
+/* Configuration -------------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   LL_Init();
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
   /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
 
 	//configuration des leds
-	Led_init(&led0, GPIOA, 5);
-	Led_init(&led1, GPIOB, 6);
-	Led_init(&led2, GPIOC, 7);
-	Led_init(&led3, GPIOA, 9);
+	Led_init(&led0, GPIOA, 6);
+	Led_init(&led1, GPIOA, 7);
+	Led_init(&led2, GPIOB, 6);
+	Led_init(&led3, GPIOC, 7);
+	Led_init(&led4, GPIOA, 9);
+	Led_init(&led5, GPIOA, 8);
+	Led_init(&led6, GPIOB, 10);
+	Led_init(&led7, GPIOB, 4);
+	Led_init(&led8, GPIOB, 5);
+	Led_init(&led9, GPIOA, 10);
+	Led_init(&warning, GPIOA, 5);
+	LED_TypeDef leds[10] = {led0, led1, led2, led3, led4, led5, led6, led7, led8, led9};
 
-	//configuration du bouton sur la pin PA13
-	Button_init(&bouton, GPIOB, 3, LL_GPIO_PULL_NO);
-	uint8_t last_button_state=1; //bouton non appuyé
-	uint8_t current_button_state=1; //bouton non appuyé
+	Capson_init(&capteurTrigger, &capteurEcho, GPIOB, 8, GPIOB, 0);
 
+	cm=0;
+
+    LL_Init1msTick(16000);
+    /**
+    for (int i=0; i<NB_LED; i++) {
+    	Led_turnOn(&leds[i]);
+    }
+    /**/
 
   /* USER CODE END 2 */
 
@@ -126,10 +112,13 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-	Led_turnOn(&led0);
-	Led_turnOn(&led1);
-	Led_turnOn(&led2);
-	Led_turnOn(&led3);
+	  cm = Capson_measure(&capteurTrigger, &capteurEcho);
+	  for (int i=0; i<cm; i++) {
+		  Led_turnOn(&leds[i]);
+	  }
+	  for (int j=cm; j<10; j++) {
+		  Led_turnOff(&leds[j]);
+	  }
 
   /* USER CODE END 3 */
   }

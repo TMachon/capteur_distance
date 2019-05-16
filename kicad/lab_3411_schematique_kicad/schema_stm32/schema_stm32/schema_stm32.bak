@@ -36,8 +36,4 @@ F 3 "" H 10200 3350 50  0001 C CNN
 	1    9700 2500
 	1    0    0    -1  
 $EndComp
-Text Notes 3650 2050 0    197  ~ 0
-{
-Text Notes 3072 2031 0    50   ~ 0
-Pour alimenter \nles composants
 $EndSCHEMATC
