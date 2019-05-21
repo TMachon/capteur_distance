@@ -11,14 +11,16 @@
 #include "stm32l053xx.h"
 
 typedef struct {
-	GPIO_TypeDef * gpioPort;
-	uint16_t pin;
+	GPIO_TypeDef * gpioPortTrigger;
+	uint16_t pinTrigger;
+	GPIO_TypeDef * gpioPortEcho;
+	uint16_t pinEcho;
 } CAPSON_TypeDef;
 
-void Capson_init (CAPSON_TypeDef * capsonTrigger, CAPSON_TypeDef * capsonEcho, GPIO_TypeDef * portTrigger, uint16_t pinTrigger, GPIO_TypeDef * portEcho, uint16_t pinEcho);
-uint8_t Capson_isOn (CAPSON_TypeDef * capsonEcho);
-uint8_t Capson_isOff(CAPSON_TypeDef * capsonEcho);
-void Capson_trigger(CAPSON_TypeDef * capsonTrigger);
-int Capson_measure(CAPSON_TypeDef * capsonTrigger, CAPSON_TypeDef * capsonEcho);
+void Capson_init (CAPSON_TypeDef * capson, GPIO_TypeDef * portTrigger, uint16_t pinTrigger, GPIO_TypeDef * portEcho, uint16_t pinEcho);
+uint8_t Capson_isOn (CAPSON_TypeDef * capson);
+uint8_t Capson_isOff(CAPSON_TypeDef * capson);
+void Capson_trigger(CAPSON_TypeDef * capson);
+int Capson_measure(CAPSON_TypeDef * capson);
 
 #endif /* CAPSON_H_ */

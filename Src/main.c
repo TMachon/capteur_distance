@@ -54,9 +54,9 @@ LED_TypeDef led6;
 LED_TypeDef led7;
 LED_TypeDef led8;
 LED_TypeDef led9;
+LED_TypeDef ledDefault;
 LED_TypeDef warning;
-CAPSON_TypeDef capteurTrigger;
-CAPSON_TypeDef capteurEcho;
+CAPSON_TypeDef capteur;
 int cm;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -78,6 +78,11 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
 	//configuration des leds
+	Led_init(&ledDefault, GPIOA, 5);
+	Led_turnOn(&ledDefault);
+
+	Led_init(&warning, GPIOA, 5);
+
 	Led_init(&led0, GPIOA, 6);
 	Led_init(&led1, GPIOA, 7);
 	Led_init(&led2, GPIOB, 6);
@@ -88,39 +93,36 @@ int main(void)
 	Led_init(&led7, GPIOB, 4);
 	Led_init(&led8, GPIOB, 5);
 	Led_init(&led9, GPIOA, 10);
-	Led_init(&warning, GPIOA, 5);
 	LED_TypeDef leds[10] = {led0, led1, led2, led3, led4, led5, led6, led7, led8, led9};
 
-	Capson_init(&capteurTrigger, &capteurEcho, GPIOB, 8, GPIOB, 0);
+	Capson_init(&capteur, GPIOB, 8, GPIOB, 0);
 
 	cm=0;
 
     LL_Init1msTick(16000);
-    /**
-    for (int i=0; i<NB_LED; i++) {
-    	Led_turnOn(&leds[i]);
-    }
-    /**/
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-  /* USER CODE END WHILE */
 
-  /* USER CODE BEGIN 3 */
-
-	  cm = Capson_measure(&capteurTrigger, &capteurEcho);
-	  for (int i=0; i<cm; i++) {
-		  Led_turnOn(&leds[i]);
+	  cm = Capson_measure(&capteur);
+	  if (cm > 50) {
+		  for (int i=0; i<10; i++) {
+			  Led_turnOff(&leds[i]);
+		  }
+		  if (Led_isOff(&warning)) Led_turnOn(&warning);
+		  else Led_turnOff(&warning);
+		  LL_mDelay(100000);
 	  }
-	  for (int j=cm; j<10; j++) {
-		  Led_turnOff(&leds[j]);
+	  else {
+		  cm /= 5;
+		  if (Led_isOn(&warning)) Led_turnOff(&warning);
+		  for (int i=0; i<cm; i++) {
+			  Led_turnOn(&leds[i]);
+		  }
+		  for (int j=cm; j<10; j++) {
+			  Led_turnOff(&leds[j]);
+		  }
 	  }
-
-  /* USER CODE END 3 */
   }
 
 }
